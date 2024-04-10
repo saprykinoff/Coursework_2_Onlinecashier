@@ -47,8 +47,9 @@ class MenuState(
                     //Add to order
                     val menuItemId = params[0].toString().toInt()
                     stateController.dataService.addOrderItem(stateController.chatId, menuItemId, 1)
-                    val item = stateController.dataService.getMenuItem(menuItemId) ?: return this
-                    stateController.answer(query.id, "Товар \"${item.name}\" успешно добавлен в корзину")
+                    val menuItem = stateController.dataService.getMenuItem(menuItemId) ?: return this
+                    val orderItem = stateController.dataService.getOrderItemByMenuItemId(menuItemId)
+                    stateController.answer(query.id, "Товар \"${menuItem.name}\"(${orderItem?.amount ?: 0}) успешно добавлен в корзину")
                     return this
                 }
                 "empty" -> {

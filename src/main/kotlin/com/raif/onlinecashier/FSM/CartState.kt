@@ -50,6 +50,7 @@ class CartState(
                 "buy" -> {
                     val amount = stateController.dataService.calcOrderPrice(stateController.chatId)
                     val qr = stateController.dataService.createQr(amount, stateController.chatId)
+                    stateController.dataService.clearCart(stateController.chatId)
                     stateController.answer(query.id)
                     return OrderDetailsState(stateController, qr?.id ?: -1)
                 }

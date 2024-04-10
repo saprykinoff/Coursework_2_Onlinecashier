@@ -56,7 +56,8 @@ class DataService(
     }
 
     fun clearCart(chatId: Long) {
-        orderEntityRepository.deleteByChatId(chatId)
+        println("delete $chatId")
+        orderEntityRepository.deleteAllByChatId(chatId)
     }
 
     fun getMenuPageCount(chatId: Long): Int {
@@ -95,6 +96,9 @@ class DataService(
 
     fun getOrderItem(id: Int): OrderEntity? {
         return orderEntityRepository.findById(id).getOrNull()
+    }
+    fun getOrderItemByMenuItemId(menuItemId: Int): OrderEntity? {
+        return orderEntityRepository.findByMenuItemId(menuItemId)
     }
 
     fun getQrObject(id: Int): QrObject? {
