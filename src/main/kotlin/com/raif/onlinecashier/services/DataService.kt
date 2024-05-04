@@ -86,7 +86,7 @@ class DataService(
 
     fun getQrPage(chatId: Long, page: Int): List<QrObject> {
         val pageable = PageRequest.of(page, Constants.ITEMS_ON_PAGE, Sort.by("id").descending())
-        val pageResult = qrObjectRepository.findAllByRelatedChatId(chatId, pageable)
+        val pageResult = qrObjectRepository.findAllByChatId(chatId, pageable)
         return pageResult.content
     }
 

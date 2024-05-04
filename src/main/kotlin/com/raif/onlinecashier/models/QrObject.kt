@@ -17,12 +17,12 @@ class QrObject(
     val payload: String = "",
     val qrUrl: String = "",
     var qrStatus: String = "",
-    val relatedChatId: Long = 0,
+    val chatId: Long = 0,
     val amount: Double = 0.0,
 )
 
 @Repository
 interface QrObjectRepository : JpaRepository<QrObject, Int> {
     fun findAllByQrStatus(qrStatus: String): List<QrObject>
-    fun findAllByRelatedChatId(chatId: Long, pageable: Pageable): Page<QrObject>
+    fun findAllByChatId(chatId: Long, pageable: Pageable): Page<QrObject>
 }

@@ -1,8 +1,7 @@
 package com.raif.onlinecashier.FSM
 
 import com.raif.onlinecashier.Constants
-import com.raif.onlinecashier.MyInlineButton
-import com.raif.onlinecashier.Utilities
+import com.raif.onlinecashier.services.MyInlineButton
 import org.telegram.telegrambots.meta.api.objects.Update
 import kotlin.math.max
 import kotlin.math.min
@@ -15,7 +14,7 @@ class CartState(
     override fun nextState(update: Update): State {
         if (update.hasCallbackQuery()) {
             val query = update.callbackQuery
-            val (id, params) = Utilities.parseCallback(query, "cart") ?: return this
+            val (id, params) = stateController.parseCallback(query, "cart") ?: return this
             when (id) {
                 "left" -> {
                     stateController.answer(query.id)
@@ -51,6 +50,7 @@ class CartState(
                 "buy" -> {
                     val amount = stateController.dataService.calcOrderPrice(stateController.chatId)
                     val qr = stateController.dataService.createQr(amount, stateController.chatId)
+                    if (qr != null)
                     stateController.dataService.clearCart(stateController.chatId)
                     stateController.answer(query.id)
                     return OrderDetailsState(stateController, qr?.id ?: -1)
@@ -104,7 +104,7 @@ class CartState(
         menuButtons.add(listOf(MyInlineButton("Купить\uD83D\uDED2($price Руб.)", "buy")))
         menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
 
-        val markup = Utilities.makeInlineKeyboard(menuButtons, "cart")
+        val markup = stateController.makeInlineKeyboard(menuButtons, "cart")
         stateController.send(text, markup)
 
 

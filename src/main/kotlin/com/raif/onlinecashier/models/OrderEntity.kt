@@ -19,7 +19,7 @@ class OrderEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
     val chatId: Long = 0,
-    @ManyToOne(cascade = [])
+    @ManyToOne()
     val menuItem: MenuEntity = MenuEntity(),
     @Min(value = 1, message = "amount must be greater than 0")
     var amount: Int = 0,

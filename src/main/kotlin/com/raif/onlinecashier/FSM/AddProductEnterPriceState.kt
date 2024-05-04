@@ -1,7 +1,6 @@
 package com.raif.onlinecashier.FSM
 
-import com.raif.onlinecashier.MyInlineButton
-import com.raif.onlinecashier.Utilities
+import com.raif.onlinecashier.services.MyInlineButton
 import org.telegram.telegrambots.meta.api.objects.Update
 
 class AddProductEnterPriceState(
@@ -19,7 +18,7 @@ class AddProductEnterPriceState(
         }
         if (update.hasCallbackQuery()) {
             val query = update.callbackQuery
-            val (id, params) = Utilities.parseCallback(query, "add_product_price") ?: return this
+            val (id, params) = stateController.parseCallback(query, "add_product_price") ?: return this
             when (id) {
                 "cancel" -> {
                     stateController.answer(query.id)
@@ -36,7 +35,7 @@ class AddProductEnterPriceState(
             "Пожалуйста, введите информацию о товаре, который вы хотите добавить. \n" +
                     "Название: $name\n" +
                     "Цена: ?"
-        val markup = Utilities.makeInlineKeyboard(
+        val markup = stateController.makeInlineKeyboard(
             listOf(
                 listOf(MyInlineButton("Отмена", "cancel"))
             ), "add_product_price"

@@ -1,7 +1,7 @@
 package com.raif.onlinecashier.FSM
 
-import com.raif.onlinecashier.MyInlineButton
-import com.raif.onlinecashier.Utilities
+import com.raif.onlinecashier.services.MyInlineButton
+
 
 import org.telegram.telegrambots.meta.api.objects.Update
 
@@ -11,7 +11,7 @@ class HomeState(
     override fun nextState(update: Update): State {
         if (update.hasCallbackQuery()) {
             val query = update.callbackQuery
-            val (id) = Utilities.parseCallback(query, "homepage") ?: return this
+            val (id) = stateController.parseCallback(query, "homepage") ?: return this
             when (id) {
                 "menu" -> {
                     stateController.answer(query.id)
@@ -40,7 +40,7 @@ class HomeState(
 
     override fun show() {
         val text = "Навигация:"
-        val markup = Utilities.makeInlineKeyboard(
+        val markup = stateController.makeInlineKeyboard(
             listOf(
                 listOf(MyInlineButton("Меню", "menu")),
                 listOf(MyInlineButton("Последний заказ", "lastOrder")),

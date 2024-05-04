@@ -10,8 +10,9 @@ import org.telegram.telegrambots.meta.api.objects.Update
 
 @Service
 class TelegramManager(
-    private var telegramService: TelegramService,
-    private var dataService: DataService,
+    private val telegramService: TelegramService,
+    private val dataService: DataService,
+    private val utilitiyService: UtilitiyService,
 ) {
 
     private var states: MutableMap<Long, State> = mutableMapOf()
@@ -20,23 +21,18 @@ class TelegramManager(
     @EventListener
     fun update(update: Update) {
         if (update.hasMessage()) {
-            if (update.message.text.lowercase() == "test") {
-                dataService.createQr(123.0, 472209097)
-                dataService.createQr(123.0, 472209097)
-            }
             val chatId = update.message.chatId
-            val stateController = StateController(telegramService, dataService, chatId)
+            val stateController = StateController(telegramService, dataService, utilitiyService, chatId)
             try {
                 states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
-            } catch (e: Throwable) {
+            } catch (e: Exception) {
                 states[chatId] = HomeState(stateController)
             }
             states[chatId]?.show()
         }
         if (update.hasCallbackQuery()) {
             val chatId = update.callbackQuery.message.chatId
-            val stateController = StateController(telegramService, dataService, chatId)
-
+            val stateController = StateController(telegramService, dataService, utilitiyService, chatId)
             try {
                 states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
             } catch (e: Exception) {

@@ -1,8 +1,7 @@
 package com.raif.onlinecashier.FSM
 
 import com.raif.onlinecashier.Constants
-import com.raif.onlinecashier.MyInlineButton
-import com.raif.onlinecashier.Utilities
+import com.raif.onlinecashier.services.MyInlineButton
 import org.telegram.telegrambots.meta.api.objects.Update
 import kotlin.math.max
 import kotlin.math.min
@@ -14,7 +13,7 @@ class MenuDeletionModeState(
     override fun nextState(update: Update): State {
         if (update.hasCallbackQuery()) {
             val query = update.callbackQuery
-            val (id, params) = Utilities.parseCallback(query, "del_menu") ?: return this
+            val (id, params) = stateController.parseCallback(query, "del_menu") ?: return this
             when (id) {
                 "left" -> {
                     stateController.answer(query.id)
@@ -88,7 +87,7 @@ class MenuDeletionModeState(
         )
         menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
 
-        val markup = Utilities.makeInlineKeyboard(menuButtons, "del_menu")
+        val markup = stateController.makeInlineKeyboard(menuButtons, "del_menu")
 
         stateController.send(text, markup)
 
