@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository
 class MenuEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     val id: Int = 0,
     @Column(nullable = false)
     val chatId: Long = 0,
@@ -20,9 +19,7 @@ class MenuEntity(
     val name: String = "",
     @Column(nullable = false)
     val price: Double = 0.0,
-) {
-    constructor(chatId: Long, name: String, price: Double) : this(0, chatId, name, price)
-}
+)
 
 @Repository
 interface MenuEntityRepository : JpaRepository<MenuEntity, Int> {

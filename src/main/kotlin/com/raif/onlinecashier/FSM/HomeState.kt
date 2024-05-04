@@ -17,10 +17,12 @@ class HomeState(
                     stateController.answer(query.id)
                     return MenuState(stateController, 1)
                 }
+
                 "cart" -> {
                     stateController.answer(query.id)
                     return CartState(stateController, 1)
                 }
+
                 "lastOrder" -> {
                     stateController.answer(query.id)
                     val page = stateController.dataService.getQrPage(stateController.chatId, 0)

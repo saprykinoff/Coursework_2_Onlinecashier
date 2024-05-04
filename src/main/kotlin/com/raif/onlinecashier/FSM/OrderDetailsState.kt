@@ -4,7 +4,7 @@ import com.raif.onlinecashier.MyInlineButton
 import com.raif.onlinecashier.Utilities
 import org.telegram.telegrambots.meta.api.objects.Update
 
-class OrderDetailsState (
+class OrderDetailsState(
     private val stateController: StateController,
     private val idQr: Int,
 ) : State {
@@ -17,6 +17,7 @@ class OrderDetailsState (
                     stateController.answer(query.id)
                     return HomeState(stateController)
                 }
+
                 "update" -> {
                     stateController.answer(query.id)
                     return this

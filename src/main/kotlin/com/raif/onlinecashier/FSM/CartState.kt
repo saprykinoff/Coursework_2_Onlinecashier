@@ -47,6 +47,7 @@ class CartState(
                     stateController.answer(query.id, "Товар \"${item.name}\" успешно удален из корзины")
                     return this
                 }
+
                 "buy" -> {
                     val amount = stateController.dataService.calcOrderPrice(stateController.chatId)
                     val qr = stateController.dataService.createQr(amount, stateController.chatId)
@@ -54,6 +55,7 @@ class CartState(
                     stateController.answer(query.id)
                     return OrderDetailsState(stateController, qr?.id ?: -1)
                 }
+
                 "empty" -> {
                     stateController.answer(query.id)
                     return this

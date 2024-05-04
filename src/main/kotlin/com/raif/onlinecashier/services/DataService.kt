@@ -18,7 +18,7 @@ class DataService(
     private val logger = LoggerFactory.getLogger("DataLayer")
 
     fun addMenuItem(chatId: Long, name: String, price: Double) {
-        val entity = MenuEntity(chatId, name, price)
+        val entity = MenuEntity(0, chatId, name, price)
         menuEntityRepository.saveAndFlush(entity)
         logger.info("Add to [$chatId] menu item ($name, $price)")
     }
@@ -35,7 +35,7 @@ class DataService(
         var entity = orderEntityRepository.findByMenuItemId(menuId)
         if (entity == null) {
             if (count < 0) return
-            entity = OrderEntity(chatId, MenuEntity(menuId), count)
+            entity = OrderEntity(0, chatId, MenuEntity(menuId), count)
             orderEntityRepository.saveAndFlush(entity)
             logger.info("Add to [$chatId] order item ($menuId, $count)")
             return
@@ -97,6 +97,7 @@ class DataService(
     fun getOrderItem(id: Int): OrderEntity? {
         return orderEntityRepository.findById(id).getOrNull()
     }
+
     fun getOrderItemByMenuItemId(menuItemId: Int): OrderEntity? {
         return orderEntityRepository.findByMenuItemId(menuItemId)
     }
@@ -134,6 +135,7 @@ class DataService(
         logger.info("Qr ${qrObject.qrId}(${qrObject.id}, ${qrObject.amount} руб.) created")
         return qrObject
     }
+
     fun calcOrderPrice(chatId: Long): Double {
         var curSum = 0.0
         var pageNum = 0

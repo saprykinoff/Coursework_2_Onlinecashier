@@ -20,15 +20,12 @@ class OrderEntity(
     val id: Int = 0,
     @Column(nullable = false)
     val chatId: Long = 0,
-
     @ManyToOne(cascade = [])
     val menuItem: MenuEntity = MenuEntity(),
     @Column(nullable = false)
     @Min(value = 1, message = "amount must be greater than 0")
     var amount: Int = 0,
-) {
-    constructor(chatId: Long, menuItem: MenuEntity, amount: Int) : this(0, chatId, menuItem, amount)
-}
+)
 
 @Repository
 interface OrderEntityRepository : JpaRepository<OrderEntity, Int> {

@@ -26,9 +26,9 @@ class TelegramManager(
             }
             val chatId = update.message.chatId
             val stateController = StateController(telegramService, dataService, chatId)
-            try{
+            try {
                 states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
-            } catch(e: Throwable) {
+            } catch (e: Throwable) {
                 states[chatId] = HomeState(stateController)
             }
             states[chatId]?.show()
@@ -37,7 +37,7 @@ class TelegramManager(
             val chatId = update.callbackQuery.message.chatId
             val stateController = StateController(telegramService, dataService, chatId)
 
-            try{
+            try {
                 states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
             } catch (e: Exception) {
                 states[chatId] = HomeState(stateController)
@@ -47,7 +47,6 @@ class TelegramManager(
 
         return
     }
-
 
 
 }

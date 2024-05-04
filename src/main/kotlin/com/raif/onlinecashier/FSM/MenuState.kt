@@ -19,12 +19,12 @@ class MenuState(
             when (id) {
                 "left" -> {
                     stateController.answer(query.id)
-                    return MenuState(stateController,page - 1)
+                    return MenuState(stateController, page - 1)
                 }
 
                 "right" -> {
                     stateController.answer(query.id)
-                    return MenuState(stateController,  page + 1)
+                    return MenuState(stateController, page + 1)
                 }
 
                 "add" -> {
@@ -49,9 +49,13 @@ class MenuState(
                     stateController.dataService.addOrderItem(stateController.chatId, menuItemId, 1)
                     val menuItem = stateController.dataService.getMenuItem(menuItemId) ?: return this
                     val orderItem = stateController.dataService.getOrderItemByMenuItemId(menuItemId)
-                    stateController.answer(query.id, "Товар \"${menuItem.name}\"(${orderItem?.amount ?: 0}) успешно добавлен в корзину")
+                    stateController.answer(
+                        query.id,
+                        "Товар \"${menuItem.name}\"(${orderItem?.amount ?: 0}) успешно добавлен в корзину"
+                    )
                     return this
                 }
+
                 "empty" -> {
                     stateController.answer(query.id)
                     return this
@@ -75,7 +79,15 @@ class MenuState(
         val menu = stateController.dataService.getMenuPage(stateController.chatId, page - 1)
         val menuButtons = mutableListOf<List<MyInlineButton>>()
         for (ent in menu) {
-            menuButtons.add(listOf(MyInlineButton("${ent.name} (${ent.price} руб)", "addToCart", listOf(ent.id, ent.name))))
+            menuButtons.add(
+                listOf(
+                    MyInlineButton(
+                        "${ent.name} (${ent.price} руб)",
+                        "addToCart",
+                        listOf(ent.id, ent.name)
+                    )
+                )
+            )
         }
         for (i in menu.size..<Constants.ITEMS_ON_PAGE) {
             menuButtons.add(listOf(MyInlineButton()))

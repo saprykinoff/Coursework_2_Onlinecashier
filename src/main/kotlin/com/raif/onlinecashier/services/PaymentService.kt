@@ -12,6 +12,7 @@ class PaymentService(
     private val qrObjectRepository: QrObjectRepository,
 ) {
     private val logger = LoggerFactory.getLogger("PaymentService")
+
     @Scheduled(fixedDelay = 1000)
     fun checkUpdates() {
         val activeQrs = qrObjectRepository.findAllByQrStatus("NEW")

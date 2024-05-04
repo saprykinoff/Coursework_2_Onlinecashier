@@ -12,7 +12,14 @@ class StateController(
     fun send(text: String, replyMarkup: ReplyKeyboard? = null, markdown: Boolean = false, replyTo: Int? = null): Int {
         return telegramService.sendMessage(chatId, text, replyMarkup, markdown, replyTo)
     }
-    fun sendPhoto(text: String,url: String, replyMarkup: ReplyKeyboard? = null, markdown: Boolean = false, replyTo: Int? = null): Int {
+
+    fun sendPhoto(
+        text: String,
+        url: String,
+        replyMarkup: ReplyKeyboard? = null,
+        markdown: Boolean = false,
+        replyTo: Int? = null
+    ): Int {
         return telegramService.sendPhoto(chatId, text, url, replyMarkup, markdown, replyTo)
     }
 

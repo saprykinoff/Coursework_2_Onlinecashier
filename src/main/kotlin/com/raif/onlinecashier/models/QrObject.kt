@@ -19,11 +19,7 @@ class QrObject(
     var qrStatus: String = "",
     val relatedChatId: Long = 0,
     val amount: Double = 0.0,
-
-    ) {
-    constructor(qrId: String, payload: String, qrUrl: String, qrStatus: String, relatedChatId: Long, amount: Double) :
-            this(0, qrId, payload, qrUrl, qrStatus, relatedChatId, amount)
-}
+)
 
 @Repository
 interface QrObjectRepository : JpaRepository<QrObject, Int> {
