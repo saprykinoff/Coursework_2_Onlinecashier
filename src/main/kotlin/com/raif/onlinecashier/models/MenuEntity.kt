@@ -13,11 +13,8 @@ class MenuEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0,
-    @Column(nullable = false)
     val chatId: Long = 0,
-    @Column(nullable = false)
     val name: String = "",
-    @Column(nullable = false)
     val price: Double = 0.0,
 )
 
