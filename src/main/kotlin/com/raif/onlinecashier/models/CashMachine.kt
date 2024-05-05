@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.stereotype.Repository
 
 
 @Entity
@@ -21,6 +23,9 @@ class CashMachine (
     val orders: List<OrderEntity> = listOf(),
     val qrVarLink: String = "",
     var status: String = "INACTIVE",
-
-
 )
+
+@Repository
+interface CashMachineRepository : JpaRepository<CashMachine, Int> {
+
+}

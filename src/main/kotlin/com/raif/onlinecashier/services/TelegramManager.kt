@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Update
 class TelegramManager(
     private val telegramService: TelegramService,
     private val dataService: DataService,
-    private val utilitiyService: UtilitiyService,
+    private val utilityService: UtilityService,
 ) {
 
     private var states: MutableMap<Long, State> = mutableMapOf()
@@ -20,28 +20,24 @@ class TelegramManager(
 
     @EventListener
     fun update(update: Update) {
+        val chatId: Long
+        val stateController: StateController
         if (update.hasMessage()) {
-            val chatId = update.message.chatId
-            val stateController = StateController(telegramService, dataService, utilitiyService, chatId)
-            try {
-                states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
-            } catch (e: Exception) {
-                states[chatId] = HomeState(stateController)
-            }
-            states[chatId]?.show()
-        }
-        if (update.hasCallbackQuery()) {
-            val chatId = update.callbackQuery.message.chatId
-            val stateController = StateController(telegramService, dataService, utilitiyService, chatId)
-            try {
-                states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
-            } catch (e: Exception) {
-                states[chatId] = HomeState(stateController)
-            }
-            states[chatId]?.show()
+            chatId = update.message.chatId
+            stateController = StateController(telegramService, dataService, utilityService, chatId)
+        } else if (update.hasCallbackQuery()) {
+            chatId = update.callbackQuery.message.chatId
+            stateController = StateController(telegramService, dataService, utilityService, chatId)
+        } else {
+            return
         }
 
-        return
+        try {
+            states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
+        } catch (e: Exception) {
+            states[chatId] = HomeState(stateController)
+        }
+        states[chatId]!!.show()
     }
 
 

@@ -51,7 +51,7 @@ class CartState(
                     val amount = stateController.dataService.calcOrderPrice(stateController.chatId)
                     val qr = stateController.dataService.createQr(amount, stateController.chatId)
                     if (qr != null)
-                    stateController.dataService.clearCart(stateController.chatId)
+                        stateController.dataService.clearCart(stateController.chatId)
                     stateController.answer(query.id)
                     return OrderDetailsState(stateController, qr?.id ?: -1)
                 }
@@ -67,7 +67,7 @@ class CartState(
     }
 
 
-    override fun show() {
+    override fun show(): Int {
         val pageCount = stateController.dataService.getOrderPageCount(stateController.chatId)
         page = max(1, page)
         page = min(page, pageCount)
@@ -105,7 +105,7 @@ class CartState(
         menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
 
         val markup = stateController.makeInlineKeyboard(menuButtons, "cart")
-        stateController.send(text, markup)
+        return stateController.updateState(text, markup)
 
 
     }

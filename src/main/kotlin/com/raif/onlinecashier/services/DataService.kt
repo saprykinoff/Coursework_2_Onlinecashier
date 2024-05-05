@@ -13,6 +13,8 @@ class DataService(
     private val qrObjectRepository: QrObjectRepository,
     private val menuEntityRepository: MenuEntityRepository,
     private val orderEntityRepository: OrderEntityRepository,
+    private val chatInfoRepository: ChatInfoRepository,
+    private val cashMachineRepository: CashMachineRepository
 ) {
 
     private val logger = LoggerFactory.getLogger("DataLayer")
@@ -150,4 +152,17 @@ class DataService(
         return curSum
     }
 
+    fun getChatInfo(chatId: Long): ChatInfo? {
+        return chatInfoRepository.findById(chatId).getOrNull()
+    }
+
+    fun createCashMachine(chatId: Long, name: String, link: String = ""): CashMachine {
+        val cm = CashMachine(chatId = chatId, name = name, qrVarLink = link)
+        cashMachineRepository.saveAndFlush(cm)
+        return cm
+    }
+
+    fun saveChatInfo(chatInfo: ChatInfo) {
+        chatInfoRepository.saveAndFlush(chatInfo)
+    }
 }

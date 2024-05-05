@@ -9,7 +9,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton
 
 @Service
-class UtilitiyService() {
+class UtilityService() {
 
     fun makeInlineKeyboard(
         buttons: List<List<MyInlineButton>>,

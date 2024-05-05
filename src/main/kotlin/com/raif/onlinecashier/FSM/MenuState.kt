@@ -66,7 +66,7 @@ class MenuState(
     }
 
 
-    override fun show() {
+    override fun show(): Int {
         val pageCount = stateController.dataService.getMenuPageCount(stateController.chatId)
         page = max(1, page)
         page = min(page, pageCount)
@@ -102,8 +102,6 @@ class MenuState(
         menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
 
         val markup = stateController.makeInlineKeyboard(menuButtons, "menu")
-        stateController.send(text, markup)
-
-
+        return stateController.updateState(text, markup)
     }
 }

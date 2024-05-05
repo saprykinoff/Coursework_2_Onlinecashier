@@ -8,8 +8,14 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot
 import org.telegram.telegrambots.meta.api.methods.AnswerCallbackQuery
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.DeleteMessage
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageCaption
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageReplyMarkup.EditMessageReplyMarkupBuilder
+import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText
 import org.telegram.telegrambots.meta.api.objects.InputFile
 import org.telegram.telegrambots.meta.api.objects.Update
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard
 
 
@@ -88,7 +94,20 @@ class TelegramService(
         send.text = text
         send.showAlert = alert
         execute(send)
+    }
 
+    fun deleteMessage(chatId: Long, messageId: Int):Boolean {
+        val del = DeleteMessage(chatId.toString(), messageId)
+        return execute(del)
+    }
+
+    fun editMessage(chatId: Long, messageId: Int, text: String, replyMarkup: InlineKeyboardMarkup) {
+        val edit = EditMessageText()
+        edit.chatId = chatId.toString()
+        edit.messageId = messageId
+        edit.text = text
+        edit.replyMarkup = replyMarkup
+        execute(edit)
     }
 
 

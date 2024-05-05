@@ -30,7 +30,7 @@ class AddProductEnterPriceState(
         return AddProductEnterPriceState(stateController, name)
     }
 
-    override fun show() {
+    override fun show(): Int {
         val text =
             "Пожалуйста, введите информацию о товаре, который вы хотите добавить. \n" +
                     "Название: $name\n" +
@@ -40,7 +40,7 @@ class AddProductEnterPriceState(
                 listOf(MyInlineButton("Отмена", "cancel"))
             ), "add_product_price"
         )
-        stateController.send(text, replyMarkup = markup)
+        return stateController.updateState(text, markup)
     }
 
 }

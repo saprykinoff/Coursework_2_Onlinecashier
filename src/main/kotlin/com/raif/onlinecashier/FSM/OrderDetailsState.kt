@@ -26,7 +26,7 @@ class OrderDetailsState(
         return this
     }
 
-    override fun show() {
+    override fun show(): Int {
         val qrObject = stateController.dataService.getQrObject(idQr)
         val text = if (qrObject == null) {
             "Ошибка при загрузке. Попробуйте позже"
@@ -44,9 +44,9 @@ class OrderDetailsState(
             ), "orderDetails"
         )
         if (qrObject == null) {
-            stateController.send(text, markup)
+            return stateController.updateState(text, markup)
         } else {
-            stateController.sendPhoto(qrObject.qrUrl, text, markup)
+            return stateController.updateState(text, markup, qrObject.qrUrl)
         }
     }
 

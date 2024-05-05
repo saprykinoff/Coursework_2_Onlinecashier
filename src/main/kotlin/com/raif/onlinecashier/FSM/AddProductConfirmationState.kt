@@ -28,7 +28,7 @@ class AddProductConfirmationState(
         return this
     }
 
-    override fun show() {
+    override fun show():Int {
         val text =
             "Пожалуйста, проверьте информацию о товаре, который вы хотите добавить. \n" +
                     "Название: $name\n" +
@@ -39,7 +39,7 @@ class AddProductConfirmationState(
                 listOf(MyInlineButton("Добавить", "confirm"))
             ), "add_product_confirmation"
         )
-        stateController.send(text, markup)
+        return stateController.updateState(text, markup)
     }
 
 }

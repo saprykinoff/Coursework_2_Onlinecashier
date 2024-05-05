@@ -4,5 +4,5 @@ import org.telegram.telegrambots.meta.api.objects.Update
 
 interface State {
     fun nextState(update: Update): State
-    fun show()
+    fun show() : Int
 }

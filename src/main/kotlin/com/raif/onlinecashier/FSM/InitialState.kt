@@ -9,7 +9,7 @@ class InitialState(
         return HomeState(stateController)
     }
 
-    override fun show() {
-
+    override fun show(): Int {
+        return 0
     }
 }

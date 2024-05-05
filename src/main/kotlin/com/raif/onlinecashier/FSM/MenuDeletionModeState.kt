@@ -60,7 +60,7 @@ class MenuDeletionModeState(
     }
 
 
-    override fun show() {
+    override fun show(): Int {
         val pageCount = stateController.dataService.getMenuPageCount(stateController.chatId)
         page = max(1, page)
         page = min(page, pageCount)
@@ -89,8 +89,6 @@ class MenuDeletionModeState(
 
         val markup = stateController.makeInlineKeyboard(menuButtons, "del_menu")
 
-        stateController.send(text, markup)
-
-
+        return stateController.updateState(text, markup)
     }
 }

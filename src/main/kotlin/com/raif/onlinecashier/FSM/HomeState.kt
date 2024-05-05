@@ -1,6 +1,7 @@
 package com.raif.onlinecashier.FSM
 
 import com.raif.onlinecashier.services.MyInlineButton
+import org.slf4j.LoggerFactory
 
 
 import org.telegram.telegrambots.meta.api.objects.Update
@@ -8,6 +9,9 @@ import org.telegram.telegrambots.meta.api.objects.Update
 class HomeState(
     private val stateController: StateController
 ) : State {
+
+    private val logger = LoggerFactory.getLogger("DataLayer")
+
     override fun nextState(update: Update): State {
         if (update.hasCallbackQuery()) {
             val query = update.callbackQuery
@@ -38,7 +42,7 @@ class HomeState(
     }
 
 
-    override fun show() {
+    override fun show(): Int {
         val text = "Навигация:"
         val markup = stateController.makeInlineKeyboard(
             listOf(
@@ -48,6 +52,6 @@ class HomeState(
             ), "homepage"
         )
 
-        stateController.send(text, markup)
+        return stateController.updateState(text, markup)
     }
 }
