@@ -36,6 +36,11 @@ class HomeState(
                     }
                     return OrderDetailsState(stateController, idQr)
                 }
+
+                "help" -> {
+                    stateController.answer(query.id)
+                    return HelpState(stateController)
+                }
             }
         }
         return HomeState(stateController)
@@ -49,6 +54,7 @@ class HomeState(
                 listOf(MyInlineButton("Каталог", "menu")),
                 listOf(MyInlineButton("Последний заказ", "lastOrder")),
                 listOf(MyInlineButton("Корзина", "cart")),
+                listOf(MyInlineButton("Помощь", "help")),
             ), "homepage"
         )
 

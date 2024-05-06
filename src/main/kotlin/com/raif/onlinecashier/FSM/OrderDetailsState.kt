@@ -40,7 +40,7 @@ class OrderDetailsState(
         val markup = stateController.makeInlineKeyboard(
             listOf(
                 listOf(MyInlineButton("Обновить", "update")),
-                listOf(MyInlineButton("Назад", "home"))
+                listOf(MyInlineButton("Назад↩\uFE0F", "home"))
             ), "orderDetails"
         )
         if (qrObject == null) {

@@ -102,7 +102,7 @@ class CartState(
         )
         val price = stateController.dataService.calcOrderPrice(stateController.chatId)
         menuButtons.add(listOf(MyInlineButton("Купить\uD83D\uDED2($price Руб.)", "buy")))
-        menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
+        menuButtons.add(listOf(MyInlineButton("Назад↩\uFE0F", "exit")))
 
         val markup = stateController.makeInlineKeyboard(menuButtons, "cart")
         return stateController.updateState(text, markup)

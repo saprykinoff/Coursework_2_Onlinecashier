@@ -99,7 +99,7 @@ class MenuState(
                 MyInlineButton(if (page < pageCount) "➡\uFE0F" else " ", "right")
             )
         )
-        menuButtons.add(listOf(MyInlineButton("Выход↩\uFE0F", "exit")))
+        menuButtons.add(listOf(MyInlineButton("Назад↩\uFE0F", "exit")))
 
         val markup = stateController.makeInlineKeyboard(menuButtons, "menu")
         return stateController.updateState(text, markup)
