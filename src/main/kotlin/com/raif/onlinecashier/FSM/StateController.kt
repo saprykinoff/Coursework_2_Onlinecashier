@@ -17,7 +17,7 @@ class StateController(
     val chatId: Long,
 ) {
     fun send(text: String, replyMarkup: ReplyKeyboard? = null, markdown: Boolean = false, replyTo: Int? = null): Int {
-      return telegramService.sendMessage(chatId, text, replyMarkup, markdown, replyTo)
+        return telegramService.sendMessage(chatId, text, replyMarkup, markdown, replyTo)
     }
 
     fun sendPhoto(
@@ -42,7 +42,7 @@ class StateController(
         return utilityService.parseCallback(query, prefix)
     }
 
-    fun updateState(text: String, replyMarkup: InlineKeyboardMarkup, url: String? = null) :Int {
+    fun updateState(text: String, replyMarkup: InlineKeyboardMarkup, url: String? = null): Int {
 //        return telegramService.sendMessage(chatId, text, replyMarkup)
         var chatInfo = dataService.getChatInfo(chatId)
         val newMsg = if (url == null) {
@@ -54,7 +54,11 @@ class StateController(
             val cm = dataService.createCashMachine(chatId, "Касса")
             chatInfo = ChatInfo(chatId, cm, newMsg)
         } else {
-            telegramService.deleteMessage(chatId, chatInfo.lastMessage)
+            try {
+                telegramService.deleteMessage(chatId, chatInfo.lastMessage)
+            } catch (_: Exception) {
+
+            }
             chatInfo.lastMessage = newMsg
         }
         dataService.saveChatInfo(chatInfo)
