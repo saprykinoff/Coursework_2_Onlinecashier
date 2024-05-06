@@ -46,7 +46,7 @@ class HomeState(
         val text = "Навигация:"
         val markup = stateController.makeInlineKeyboard(
             listOf(
-                listOf(MyInlineButton("Меню", "menu")),
+                listOf(MyInlineButton("Каталог", "menu")),
                 listOf(MyInlineButton("Последний заказ", "lastOrder")),
                 listOf(MyInlineButton("Корзина", "cart")),
             ), "homepage"

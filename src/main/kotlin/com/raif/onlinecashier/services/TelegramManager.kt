@@ -20,18 +20,17 @@ class TelegramManager(
 
     @EventListener
     fun update(update: Update) {
-        val chatId: Long
-        val stateController: StateController
-        if (update.hasMessage()) {
-            chatId = update.message.chatId
-            stateController = StateController(telegramService, dataService, utilityService, chatId)
+        val chatId = if (update.hasMessage()) {
+            update.message.chatId
         } else if (update.hasCallbackQuery()) {
-            chatId = update.callbackQuery.message.chatId
-            stateController = StateController(telegramService, dataService, utilityService, chatId)
+            update.callbackQuery.message.chatId
         } else {
             return
         }
-
+        val stateController = StateController(telegramService, dataService, utilityService, chatId)
+        if (update.hasMessage() && update.message.text == "/start") {
+            states[chatId] = HomeState(stateController)
+        }
         try {
             states[chatId] = states.getOrDefault(chatId, InitialState(stateController)).nextState(update)
         } catch (e: Exception) {
