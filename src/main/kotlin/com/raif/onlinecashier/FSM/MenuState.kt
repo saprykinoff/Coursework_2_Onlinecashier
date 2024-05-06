@@ -83,7 +83,7 @@ class MenuState(
                     MyInlineButton(
                         "${ent.name} (${ent.price} руб)",
                         "addToCart",
-                        listOf(ent.id, ent.name)
+                        listOf(ent.id)
                     )
                 )
             )
